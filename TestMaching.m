@@ -1,0 +1,6 @@
+load datas.mat
+%datas.mat将会提供一个五轴机床machine，两个刀位点Machinginput1和Machinginput2
+%应用两个刀位点进行关键点等相关信息计算的类变量Machingpoisition
+%MyWorkingMachine，即我们的工作机床，提供矩阵和矩阵求导的运算
+
+high_z=Machingposition.GetHighest(100);
