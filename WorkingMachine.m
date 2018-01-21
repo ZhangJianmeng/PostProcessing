@@ -11,7 +11,7 @@ classdef WorkingMachine < handle
         Matrix           %后置处理的矩阵：4X4矩阵
         Machine          %使用的机床，提供Xm,Ym,Zm,B,C的计算
         Der_Matrix       %后置处理4X4矩阵的求导
-        cutter            %刀具       
+        cutter            %刀具
     end
     
     methods
@@ -104,7 +104,7 @@ classdef WorkingMachine < handle
         %此处的theta为转过的角度B，即当前情况下转过的角度
         %B的范围限定在0到pi/2
         %该函数能够帮助计算在某个特定输入情况下它的切深
-        function [z0min]=GetHighOfTools(obj,Machinginput)
+        function [z0min,z0max]=GetHighOfTools(obj,Machinginput)
             %此时已经得到了当前时刻下的刀位点坐标了，
             M=obj.ConstructionMatrix(Machinginput);
             B=Machinginput.B;
@@ -112,6 +112,7 @@ classdef WorkingMachine < handle
             %我们在具体应用时，R2为0。
             l0min=obj.cutter.R2*(1-cos(abs(B)))-tan(abs(B))*(obj.cutter.R1+obj.cutter.R2*sin(abs(B)));
             z0min=M33*l0min+M(3,4);
+            z0max=M(3,2)*(obj.cutter.R1+obj.cutter.R2)+obj.cutter.L*M(3,3)+M(3,4);
         end
         
     end
